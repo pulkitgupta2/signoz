@@ -111,6 +111,9 @@ services:
       # - ../common/clickhouse/storage.xml:/etc/clickhouse-server/config.d/storage.xml
   signoz:
     !!merge <<: *db-depend
+    networks:
+      - signoz-net
+      - dokploy-network
     image: signoz/signoz:${VERSION:-v0.111.0}
     container_name: signoz
     command:
@@ -187,6 +190,8 @@ services:
 networks:
   signoz-net:
     name: signoz-net
+  dokploy-network:
+    external: true
 volumes:
   clickhouse:
     name: signoz-clickhouse
